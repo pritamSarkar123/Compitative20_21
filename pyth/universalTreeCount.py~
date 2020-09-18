@@ -1,0 +1,67 @@
+#problem description
+#https://www.youtube.com/watch?v=7HgsS8bRvjo&t=13s
+
+uvtCount=0
+
+class Node:
+	def __init__(self,value,left=None,right=None):
+		self.value=value;self.left=left;self.right=right
+		
+class Tree:
+	def __init__(self):
+		self.head=None
+	def createTree(self):
+		nodeQueue=[]
+		n=int(input("Enter head node"))
+		self.head=Node(n)
+		nodeQueue.append(self.head)
+		while len(nodeQueue):
+			temp=nodeQueue.pop(0)
+			l=int(input("Enter left child"))
+			if l!=-1:
+				temp.left=Node(l)
+				nodeQueue.append(temp.left)
+			r=int(input("Enter right child"))
+			if r!=-1:
+				temp.right=Node(r)
+				nodeQueue.append(temp.right)
+		print("Tree completed")	
+		
+def UVT(p):
+	if not p.left and not p.right:
+		uvtCount+=1
+		return True
+	elif p.left and not p.right:
+		x=UVT(p.left)
+		if x==True and p.value==p.left.value:
+			uvtCount+=1
+			return True
+		else:
+			return False
+	elif not p.left and p.right:
+		y=UVT(p.right)
+		if y==True and p.value==p.right.value:
+			uvtCount+=1
+			return True
+		else:
+			return False
+	else:
+		x=UVT(p.left)
+		y=UVT(p.right)
+		if x==True and y==True and p.value==p.left.value and p.value==p.right.value:
+			uvtCount+=1
+			return True
+		else:
+			return False
+
+if __name__=="__main__":
+	t=Tree()
+	t.createTree()
+	UVT(t.head)
+	print(uvtCount)
+		
+					
+		
+				
+			
+			 
